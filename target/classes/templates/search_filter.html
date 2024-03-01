@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search and Filter</title>
+</head>
+<body>
+    <h1>Search Tasks</h1>
+    <form th:action="@{/tasks/search}" method="get">
+        <input type="text" name="title" placeholder="Title"/>
+        <input type="text" name="description" placeholder="Description"/>
+        <input type="text" name="username" placeholder="Assigned User"/>
+        <button type="submit">Search</button>
+    </form>
+
+    <h1>Filter Tasks</h1>
+    <form th:action="@{/tasks/filter}" method="get">
+        <input type="radio" name="filterType" value="completed" checked> Completed
+        <input type="radio" name="filterType" value="dueDate"> Due Date
+        <input type="date" name="startDate" placeholder="Start Date"/>
+        <input type="date" name="endDate" placeholder="End Date"/>
+        <button type="submit">Filter</button>
+    </form>
+</body>
+</html>

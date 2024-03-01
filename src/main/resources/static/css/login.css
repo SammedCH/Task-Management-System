@@ -1,0 +1,84 @@
+body {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 1px;
+	background-color: #232;
+}
+
+.box form input[type=submit]
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+    color: #fff;
+    background-color: #3498db;
+	padding:10px;
+	margin:0px 35px 0;
+	border: none;
+	cursor: pointer;
+	width: 60%;
+	border-radius: 8px;
+	letter-spacing: 0.1em;
+} 
+.box form input[type=submit]:hover{
+ transform: rotate(5deg);
+    transition: all .5s ease;
+}
+.box
+{
+	margin-top:30px;
+	margin-bottom:20px;
+	position: relative;
+	width: 300px;
+	height: 300px;
+	background: #1c1c1c;
+	border-radius: 6x;
+}
+.box form
+{
+	position: absolute;;
+	inset:4px;
+	background: #222;
+	padding: 0px 50px 0px;
+	border-radius: 8px;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+}
+.box h2
+{
+	
+	color: #fff;
+	font-weight: 500;
+	text-align: center;
+	letter-spacing: 0.1em;
+}
+.box form label
+{
+	position: relative;
+	width: 300px;
+    color: #fff;
+}
+.box form input
+{
+	position: relative;
+	width: 100%;
+	padding: 5px;
+	
+}
+.box form p
+{
+	text-align:left;
+	color: #fff;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+}
+.box form a
+{
+	color:#3498db;
+}
