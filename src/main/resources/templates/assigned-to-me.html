@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Tasks</title>
+</head>
+<body>
+    <h1>My Tasks</h1>
+    
+    <!-- Search Form -->
+    <form th:action="@{/tasks/search}" method="get">
+        <input type="text" name="title" placeholder="Search by title"/>
+        <input type="text" name="description" placeholder="Search by description"/>
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Filter Form -->
+    <form th:action="@{/tasks/filter}" method="get">
+        <select name="status">
+            <option value="">All</option>
+            <option value="true">Completed</option>
+            <option value="false">Incomplete</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.dueDate}"></td>
+            <td>
+                <input type="checkbox" th:checked="${task.completed}" th:field="*{completed}" th:onchange="'markAsComplete(' + ${task.id} + ', this.checked)'" />
+            </td>
+        </tr>
+    </table>
+
+    <script th:inline="javascript">
+        function markAsComplete(taskId, isCompleted) {
+            fetch('/tasks/' + taskId + '/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ completed: isCompleted })
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Optionally update the UI here
+            }).catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
+        }
+    </script>
+</body>
+</html>

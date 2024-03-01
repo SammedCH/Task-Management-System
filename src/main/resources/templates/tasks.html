@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Task Management System</title>
+<link rel="stylesheet" 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+      crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Task Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/tasks}">Task Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+      <div class="container">
+        <div class="row">
+           <h1> List Tasks</h1>
+        </div>
+        
+        <div class="row">
+           <div class="col-log-3">
+                <a th:href="@{/tasks/new}" class="btn btn-primary btn-sm mb-3"> Add Tasks </a>
+           </div>
+        </div>
+        
+        <!-- Search Form -->
+    <form th:action="@{/tasks/search}" method="get">
+        <input type="text" name="title" placeholder="Search by title"/>
+        <input type="text" name="description" placeholder="Search by description"/>
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Filter Form -->
+    <form th:action="@{/tasks/filter}" method="get">
+        <select name="status">
+            <option value="">All</option>
+            <option value="true">Completed</option>
+            <option value="false">Incomplete</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+        <table class="table table-stripped table-bordered">
+         <thead class="table-dark">
+          <tr>
+            <th> Task Title </th>
+            <th> Task Description </th>
+            <th> Due Date </th>
+            <th> Priority </th>
+            <th> Actions </th>
+           </tr> 
+         </thead>
+         
+         <tbody>
+         <tr th:each="task: ${tasks}">
+             <td th:text="${task.title}"></td>
+             <td th:text="${task.description}"></td>
+             <td th:text="${task.dueDate}"></td>
+             <td th:text="${task.priority}"></td>
+             <td>
+                 <a th:href="@{/tasks/edit/{id}(id=${task.id})}"
+                     class="btn btn-primary">Update</a>
+                     
+                 <a th:href="@{/tasks/{id}(id=${task.id})}"
+                     class="btn btn-danger">Delete</a>
+         
+       <td>
+     <a th:href="@{/tasks/{taskId}/assign(taskId=${task.id})}" class="btn btn-secondary">Assign to User</a>   
+      </td>
+       
+
+			
+             </td>
+             <td>
+         <!-- Display comments -->
+<div th:each="comment : ${task.comments}">
+    <p th:text="${comment.user.username}: ${comment.content}"></p>
+    <p th:text="${comment.createdAt}"></p>
+</div>
+
+<!-- Add new comment form -->
+<form th:action="@{/tasks/{taskId}/comments(taskId=${task.id})}" method="post" th:object="${comment}" th:csrf="true">
+ <!--    <textarea name="content"></textarea> -->
+    <input type="hidden" th:value="${task.id}" name="taskId"/>
+    <input type="text" name="content" placeholder="Add a comment"/>
+    <button type="submit">Add Comment</button>
+</form>
+             </td>
+         </tr>
+         </tbody>
+        </table>
+      </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
